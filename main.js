@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bandcamp Volume Bar
-// @version      1.0
+// @version      1.1
 // @author       Redcrafter
 // @description  Adds a volume bar to Bandcamp
 // @match        *://*.bandcamp.com/album/*
@@ -19,11 +19,12 @@ GM_addStyle(".volumeControl{-webkit-box-align:center;align-items:center;display:
 var dragWidth = 226;
 var dragging = false;
 var dragPos = 0;
-var percentage = 0.5;
+var percentage = localStorage.getItem("volume") || 0.5;
 var speaker, volumeInner, audio, volume;
 
 window.onload = function () {
     audio = document.getElementsByTagName("audio")[0];
+    updateVolume();
 
     var container = document.createElement("div");
     container.classList.add("volumeControl");
@@ -58,7 +59,10 @@ window.onload = function () {
     updateHtml();
 
     document.onmouseup = function () {
-        dragging = false;
+        if (dragging) {
+            localStorage.setItem("volume", percentage);
+            dragging = false;
+        }
     };
     document.onmousemove = function (e) {
         if (dragging) {
@@ -66,11 +70,15 @@ window.onload = function () {
 
             audio.muted = false;
             percentage = clamp(((e.pageX - pos.x) - dragPos) / dragWidth, 0, 1);
-            audio.volume = (Math.exp(percentage) - 1) / (Math.E - 1);
+            updateVolume();
             updateHtml();
         }
     };
 };
+
+function updateVolume() {
+    audio.volume = (Math.exp(percentage) - 1) / (Math.E - 1);
+}
 
 function updateHtml() {
     if (audio.muted) {
