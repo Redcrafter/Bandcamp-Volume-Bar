@@ -1,0 +1,11 @@
+{
+  "name": "bandcamp-volume-control",
+  "version": "1.1.1",
+  "description": "",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^5.0.0",
+    "gulp-replace": "^0.6.1",
+    "gulp-sass": "^4.0.1"
+  }
+}

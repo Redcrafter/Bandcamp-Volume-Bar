@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bandcamp Volume Bar
-// @version      1.1
+// @version      1.1.1
 // @author       Redcrafter
 // @description  Adds a volume bar to Bandcamp
 // @match        *://*.bandcamp.com/album/*
@@ -14,7 +14,7 @@ var font = document.createElement("link");
 font.href = "https://fonts.googleapis.com/icon?family=Material+Icons";
 font.rel = "stylesheet";
 document.head.appendChild(font);
-GM_addStyle(".volumeControl{-webkit-box-align:center;align-items:center;display:-webkit-box;display:flex;height:52px;margin-top:1em}.volumeControl .thumb{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.volumeControl>.speaker{background:#fff;border:1px solid #d9d9d9;border-radius:2px;color:#000;cursor:pointer;font-size:32px;height:54px;line-height:54px;position:relative;text-align:center;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;width:54px}");
+GM_addStyle("$style");
 
 var dragWidth = 226;
 var dragging = false;
