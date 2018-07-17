@@ -3,7 +3,7 @@
 // @version      1.1.3
 // @author       Redcrafter
 // @description  Adds a volume bar to Bandcamp
-// @license      APACHE 2.0; http://www.apache.org/licenses/LICENSE-2.0.txt
+// @license      Apache-2.0; http://www.apache.org/licenses/LICENSE-2.0.txt
 // @match        *://*.bandcamp.com/album/*
 // @match        *://*.bandcamp.com/track/*
 // @run-at       document-start
