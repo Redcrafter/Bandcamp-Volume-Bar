@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bandcamp Volume Bar
-// @version      1.1.1
+// @version      1.1.2
 // @author       Redcrafter
 // @description  Adds a volume bar to Bandcamp
 // @match        *://*.bandcamp.com/album/*
@@ -22,7 +22,7 @@ var dragPos = 0;
 var percentage = localStorage.getItem("volume") || 0.5;
 var speaker, volumeInner, audio, volume;
 
-window.onload = function () {
+window.addEventListener("load", function() {
     audio = document.getElementsByTagName("audio")[0];
     updateVolume();
 
@@ -31,10 +31,10 @@ window.onload = function () {
 
     speaker = document.createElement("i");
     speaker.classList.add("material-icons", "speaker");
-    speaker.onclick = function () {
+    speaker.addEventListener("click", function () {
         audio.muted = !audio.muted;
         updateHtml();
-    };
+    });
     container.appendChild(speaker);
 
     var volume = document.createElement("div");
@@ -48,23 +48,24 @@ window.onload = function () {
 
     volumeInner = document.createElement("div");
     volumeInner.classList.add("thumb");
-    volumeInner.onmousedown = function (e) {
+    
+    volumeInner.addEventListener("mousedown", function (e) {
         dragging = true;
         dragPos = e.offsetX;
-    };
+    });
     fill.appendChild(volumeInner);
-
+    
     document.getElementsByClassName("inline_player ")[0].appendChild(container);
 
     updateHtml();
 
-    document.onmouseup = function () {
+    document.addEventListener("mouseup", function () {
         if (dragging) {
             localStorage.setItem("volume", percentage);
             dragging = false;
         }
-    };
-    document.onmousemove = function (e) {
+    });
+    document.addEventListener("mousemove", function (e) {
         if (dragging) {
             var pos = volume.getBoundingClientRect();
 
@@ -73,8 +74,8 @@ window.onload = function () {
             updateVolume();
             updateHtml();
         }
-    };
-};
+    });
+});
 
 function updateVolume() {
     audio.volume = (Math.exp(percentage) - 1) / (Math.E - 1);
