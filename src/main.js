@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bandcamp Volume Bar
-// @version      1.1.3
+// @version      1.1.4
 // @author       Redcrafter
 // @description  Adds a volume bar to Bandcamp
 // @license      Apache-2.0; http://www.apache.org/licenses/LICENSE-2.0.txt
