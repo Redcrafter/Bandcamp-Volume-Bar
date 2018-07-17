@@ -1,25 +1,28 @@
 // ==UserScript==
 // @name         Bandcamp Volume Bar
-// @version      1.1.2
+// @version      1.1.3
 // @author       Redcrafter
 // @description  Adds a volume bar to Bandcamp
+// @license      APACHE 2.0 http://www.apache.org/licenses/LICENSE-2.0.txt
 // @match        *://*.bandcamp.com/album/*
 // @match        *://*.bandcamp.com/track/*
 // @run-at       document-start
-// @grant        GM_addStyle
-// @namespace https://greasyfork.org/users/126269
+// @namespace    https://greasyfork.org/users/126269
 // ==/UserScript==
 
 var font = document.createElement("link");
 font.href = "https://fonts.googleapis.com/icon?family=Material+Icons";
 font.rel = "stylesheet";
 document.head.appendChild(font);
-GM_addStyle(".volumeControl{align-items:center;display:flex;height:52px;margin-top:1em}.volumeControl .thumb{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.volumeControl>.speaker{background:#fff;border:1px solid #d9d9d9;border-radius:2px;color:#000;cursor:pointer;font-size:32px;height:54px;line-height:54px;position:relative;text-align:center;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;width:54px}");
+
+var style = document.createElement("style");
+style.textContent = ".volumeControl{align-items:center;display:flex;height:52px;margin-top:1em}.volumeControl .thumb{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.volumeControl>.speaker{background:#fff;border:1px solid #d9d9d9;border-radius:2px;color:#000;cursor:pointer;font-size:32px;height:54px;line-height:54px;position:relative;text-align:center;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;width:54px}";
+document.head.appendChild(style);
 
 var dragWidth = 226;
 var dragging = false;
 var dragPos = 0;
-var percentage = localStorage.getItem("volume") || 0.5;
+var percentage = parseFloat(localStorage.getItem("volume")) || 0.5;
 var speaker, volumeInner, audio, volume;
 
 window.addEventListener("load", function() {
@@ -55,7 +58,7 @@ window.addEventListener("load", function() {
     });
     fill.appendChild(volumeInner);
     
-    document.getElementsByClassName("inline_player ")[0].appendChild(container);
+    document.querySelector(".inline_player").appendChild(container);
 
     updateHtml();
 
@@ -70,7 +73,7 @@ window.addEventListener("load", function() {
             var pos = volume.getBoundingClientRect();
 
             audio.muted = false;
-            percentage = clamp(((e.pageX - pos.x) - dragPos) / dragWidth, 0, 1);
+            percentage = clamp(((e.pageX - pos.left) - dragPos) / dragWidth, 0, 1);
             updateVolume();
             updateHtml();
         }
@@ -83,15 +86,15 @@ function updateVolume() {
 
 function updateHtml() {
     if (audio.muted) {
-        speaker.innerText = "volume_off";
+        speaker.textContent = "volume_off";
         volumeInner.style.left = "0%";
     } else {
         if (percentage <= 0) {
-            speaker.innerText = "volume_mute";
+            speaker.textContent = "volume_mute";
         } else if (percentage < 0.6) {
-            speaker.innerText = "volume_down";
+            speaker.textContent = "volume_down";
         } else {
-            speaker.innerText = "volume_up";
+            speaker.textContent = "volume_up";
         }
         volumeInner.style.left = dragWidth * percentage + 'px';
     }
