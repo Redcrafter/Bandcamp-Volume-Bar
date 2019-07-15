@@ -6,7 +6,6 @@
 // @license      Apache-2.0; http://www.apache.org/licenses/LICENSE-2.0.txt
 // @match        *://*.bandcamp.com/album/*
 // @match        *://*.bandcamp.com/track/*
-// @run-at       document-start
 // @namespace    https://github.com/Redcrafter
 // ==/UserScript==
 
