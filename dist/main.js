@@ -4,10 +4,14 @@
 // @author       Redcrafter
 // @description  Adds a volume bar to Bandcamp
 // @license      Apache-2.0; http://www.apache.org/licenses/LICENSE-2.0.txt
-// @match        *://*.bandcamp.com/album/*
-// @match        *://*.bandcamp.com/track/*
+// @match        *://*.bandcamp.com/*
 // @namespace    https://github.com/Redcrafter
 // ==/UserScript==
+
+var gen = document.querySelector("meta[name=generator]");
+if(!gen || gen.content != "Bandcamp") {
+    return;
+}
 
 var font = document.createElement("link");
 font.href = "https://fonts.googleapis.com/icon?family=Material+Icons";
