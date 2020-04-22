@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bandcamp Volume Bar
-// @version      1.1.4
+// @version      1.1.7
 // @author       Redcrafter
 // @description  Adds a volume bar to Bandcamp
 // @license      Apache-2.0; http://www.apache.org/licenses/LICENSE-2.0.txt
@@ -12,11 +12,6 @@ var gen = document.querySelector("meta[name=generator]");
 if(!gen || gen.content != "Bandcamp") {
     return;
 }
-
-var font = document.createElement("link");
-font.href = "https://fonts.googleapis.com/icon?family=Material+Icons";
-font.rel = "stylesheet";
-document.head.appendChild(font);
 
 var style = document.createElement("style");
 style.textContent = "$style";
@@ -36,7 +31,7 @@ window.addEventListener("load", function() {
     container.classList.add("volumeControl");
 
     speaker = document.createElement("i");
-    speaker.classList.add("material-icons", "speaker");
+    speaker.classList.add("speaker");
     speaker.addEventListener("click", function () {
         audio.muted = !audio.muted;
         updateHtml();
@@ -88,16 +83,17 @@ function updateVolume() {
 }
 
 function updateHtml() {
+    // svgs from https://www.material.io/resources/icons
     if (audio.muted) {
-        speaker.textContent = "volume_off";
+        speaker.innerHTML = '$volume_off';
         volumeInner.style.left = "0%";
     } else {
         if (percentage <= 0) {
-            speaker.textContent = "volume_mute";
-        } else if (percentage < 0.6) {
-            speaker.textContent = "volume_down";
+            speaker.innerHTML = '$volume_mute';
+        } else if (percentage < 0.5) {
+            speaker.innerHTML = '$volume_down';
         } else {
-            speaker.textContent = "volume_up";
+            speaker.innerHTML = '$volume_up';
         }
         volumeInner.style.left = dragWidth * percentage + 'px';
     }

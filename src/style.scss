@@ -19,5 +19,9 @@
         text-align: center;
         user-select: none;
         width: 54px;
+
+        >svg {
+            margin: 11px;
+        }
     }
 }
