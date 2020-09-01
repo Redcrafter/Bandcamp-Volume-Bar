@@ -23,7 +23,7 @@ var dragPos = 0;
 var percentage = parseFloat(localStorage.getItem("volume")) || 0.5;
 var speaker, volumeInner, audio, volume;
 
-window.addEventListener("load", function() {
+function onLoad() {
     audio = document.getElementsByTagName("audio")[0];
     updateVolume();
 
@@ -76,7 +76,13 @@ window.addEventListener("load", function() {
             updateHtml();
         }
     });
-});
+}
+
+if (document.readyState == 'complete') {
+    onLoad();
+} else {
+    window.addEventListener("load", onLoad);
+}
 
 function updateVolume() {
     audio.volume = (Math.exp(percentage) - 1) / (Math.E - 1);
