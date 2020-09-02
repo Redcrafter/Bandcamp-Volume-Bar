@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bandcamp Volume Bar
-// @version      1.1.7
+// @version      1.1.8
 // @author       Redcrafter
 // @description  Adds a volume bar to Bandcamp
 // @license      Apache-2.0; http://www.apache.org/licenses/LICENSE-2.0.txt
@@ -23,7 +23,7 @@ var dragPos = 0;
 var percentage = parseFloat(localStorage.getItem("volume")) || 0.5;
 var speaker, volumeInner, audio, volume;
 
-window.addEventListener("load", function() {
+function onLoad() {
     audio = document.getElementsByTagName("audio")[0];
     updateVolume();
 
@@ -76,7 +76,13 @@ window.addEventListener("load", function() {
             updateHtml();
         }
     });
-});
+}
+
+if (document.readyState == 'complete') {
+    onLoad();
+} else {
+    window.addEventListener("load", onLoad);
+}
 
 function updateVolume() {
     audio.volume = (Math.exp(percentage) - 1) / (Math.E - 1);
